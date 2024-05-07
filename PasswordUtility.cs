@@ -3,7 +3,11 @@ namespace PasswordUtility
 {
     public static class PasswordUtil
     {
-        public static string Generate(int length)
+        public static string GenerateNewPassword(int length)
+        {
+            return GeneratePassword(length);
+        }
+        private static string GeneratePassword(int length)
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghi" +
                                 "jklmnopqrstuvwxyz0123456789!?_()-+*/";
