@@ -91,19 +91,26 @@ namespace UserUtily
         {
             int maxLength = listLength.ToString().Length;
             // List all the newly ceated passwords
-            for (int i = 0; i < listLength; i++)
+            for (int i = 1; i < listLength + 1; i++)
             {
                 string password = PasswordUtil.GenerateNewPassword(passwordLength);
-                if (passwordLength <= 16)
+                if (passwordLength <= 8)
                 {
-                    if (i % 2 == 0)
-                        Console.Write($"{(i + 1).ToString().PadLeft(maxLength)}. [pswd]: {password}\t\t");
-                    else
-                        Console.WriteLine($"{(i + 1).ToString().PadLeft(maxLength)}. [pswd]: {password}");
+                    Console.Write($"{(i).ToString().PadLeft(maxLength)}. [pswd]: {password}\t\t");
+
+                    if (i % 4 == 0)
+                        Console.WriteLine();
+                }
+                else if (passwordLength <= 16)
+                {
+                    Console.Write($"{(i).ToString().PadLeft(maxLength)}. [pswd]: {password}\t\t");
+                    if (i % 3 == 0)
+                        Console.WriteLine();
+
                 }
                 else
                 {
-                    Console.WriteLine($"{(i + 1).ToString().PadLeft(maxLength)}. [pswd]: {password}");
+                    Console.WriteLine($"{(i).ToString().PadLeft(maxLength)}. [pswd]: {password}");
                 }
             }
             Console.ReadLine();
