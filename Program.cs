@@ -1,5 +1,6 @@
 ﻿using PasswordUtility;
 using UserUtily;
+using HashUtility;
 
 namespace Main
 {
@@ -7,9 +8,10 @@ namespace Main
     {
         public static void Main(string[] args)
         {
-            int numberOfPasswords = UserUtil.GetUserPasswordListLength();
-            int lengthOfPassowords = UserUtil.GetUserPasswordsLength();
-            UserUtil.DisplayNewCurrentPasswordList(numberOfPasswords, lengthOfPassowords);
+            // int numberOfPasswords = UserUtil.GetUserPasswordListLength();
+            // int lengthOfPassowords = UserUtil.GetUserPasswordsLength();
+            // UserUtil.DisplayNewCurrentPasswordList(numberOfPasswords, lengthOfPassowords);
+            HashUtil.HashPassword();
         }
     }
 }
