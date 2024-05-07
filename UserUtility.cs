@@ -25,7 +25,7 @@ namespace UserUtily
             // Ask for a number of passwords to be generated.
             while (!isValidInput)
             {
-                Console.WriteLine("How many passwords to you want to generate?");
+                Console.Write("How many passwords to you want to generate?\t");
                 string? userInputAmount = Console.ReadLine();
 
                 if (userInputAmount != null)
@@ -59,7 +59,7 @@ namespace UserUtily
             while (!isValidInput)
             {
 
-                Console.WriteLine("What length do you want your passwords to be?");
+                Console.Write("What length do you want your passwords to be?\t");
                 string? userPasswordLengthInput = Console.ReadLine();
 
                 if (userPasswordLengthInput != null)
@@ -69,8 +69,6 @@ namespace UserUtily
                         int number = int.Parse(userPasswordLengthInput);
                         isValidInput = true;
                         return number;
-                        //     Console.WriteLine
-                        //         ($"Generating {numberOfPasswords} passwords of length {passwordLength}");
                     }
                     catch (Exception ex)
                     {
