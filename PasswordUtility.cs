@@ -1,7 +1,7 @@
 
 namespace PasswordUtility
 {
-    public static class PasswordGenerator
+    public static class PasswordUtil
     {
         public static string Generate(int length)
         {

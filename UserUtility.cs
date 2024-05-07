@@ -93,7 +93,7 @@ namespace UserUtily
             // List all the newly ceated passwords
             for (int i = 0; i < listLength; i++)
             {
-                string password = PasswordGenerator.Generate(passwordLength);
+                string password = PasswordUtil.Generate(passwordLength);
                 if (passwordLength <= 16)
                 {
                     if (i % 2 == 0)
