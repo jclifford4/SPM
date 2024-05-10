@@ -1,18 +1,22 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Update;
+using UserAccount;
 
 
 namespace HashUtility
 {
     public class HashUtil
     {
-        public static void HashPassword()
+        // Hashes password based on username
+        public static string? HashPassword(User user)
         {
-            string? username = GetUserName();
+            string? username = user.GetUserName();
             string? password = GetUserPassword(false);
+
 
             if (username != null && password != null)
             {
+
                 PasswordHasher<string> hasher = new PasswordHasher<string>();
                 string hashedPassword = hasher.HashPassword(username, password);
                 // Console.WriteLine(hashedPassword); // the hashed password result
@@ -28,10 +32,12 @@ namespace HashUtility
                 if (success == false)
                 {
                     Console.WriteLine("Too many attemps try again later!");
+
                 }
                 else
                 {
                     Console.WriteLine("You've succesfully created a password!");
+                    return hashedPassword;
                 }
             }
             else
@@ -39,15 +45,27 @@ namespace HashUtility
                 Console.WriteLine("An error occured!");
             }
 
+            return null;
+
         }
 
+
+        /// <summary>
+        /// Checks if current password matches previous
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="hashedPassword"></param>
+        /// <param name="attempts"></param>
+        /// <returns></returns>
         static bool VerifyPassword(string? username, string hashedPassword, int attempts)
         {
             string? password = GetUserPassword(true);
             if (username != null && password != null)
             {
                 PasswordHasher<string> hasher = new PasswordHasher<string>();
-                PasswordVerificationResult result = hasher.VerifyHashedPassword(username, hashedPassword, password);
+                PasswordVerificationResult result = hasher
+                    .VerifyHashedPassword(username, hashedPassword, password);
+
                 string resultAsString = result.ToString();
 
                 Console.WriteLine("\n" + resultAsString);
@@ -78,7 +96,7 @@ namespace HashUtility
             }
             else
             {
-                Console.Write("Enter your new password: ");
+                Console.Write("\nEnter your new password: ");
 
             }
 
@@ -87,6 +105,10 @@ namespace HashUtility
 
         }
 
+        /// <summary>
+        /// Reads key input from console
+        /// </summary>
+        /// <returns>Raw password</returns>
         static string ReadPassword()
         {
             Console.CursorVisible = false;
