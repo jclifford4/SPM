@@ -82,6 +82,10 @@ namespace HashUtility
 
         }
 
+        /// <summary>
+        /// Prompt user for username.
+        /// </summary>
+        /// <returns>null or string</returns>
         public static string? GetUserName()
         {
             Console.Write("Enter your username: ");
