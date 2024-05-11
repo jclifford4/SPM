@@ -7,7 +7,11 @@ namespace HashUtility
 {
     public class HashUtil
     {
-        // Hashes password based on username
+        /// <summary>
+        /// Hashes Password from user.
+        /// </summary>
+        /// <param name="user">User Object</param>
+        /// <returns>null or String: Password Hash</returns>
         public static string? HashPassword(User user)
         {
             string? username = user.GetUserName();
@@ -53,10 +57,10 @@ namespace HashUtility
         /// <summary>
         /// Checks if current password matches previous
         /// </summary>
-        /// <param name="username"></param>
-        /// <param name="hashedPassword"></param>
-        /// <param name="attempts"></param>
-        /// <returns></returns>
+        /// <param name="username">string?</param>
+        /// <param name="hashedPassword">string</param>
+        /// <param name="attempts">int</param>
+        /// <returns>bool: Same password or different</returns>
         static bool VerifyPassword(string? username, string hashedPassword, int attempts)
         {
             string? password = GetUserPassword(true);
@@ -85,7 +89,11 @@ namespace HashUtility
             return username ?? null;
         }
 
-        // Bool to verify copy of password against first entry;
+        /// <summary>
+        /// Prompt user to enter their password
+        /// </summary>
+        /// <param name="hasFirstPassword">bool: first password entry</param>
+        /// <returns>null or string</returns>
         static string? GetUserPassword(bool hasFirstPassword)
         {
 
