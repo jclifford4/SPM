@@ -20,6 +20,11 @@ namespace UserAccount
 
         }
 
+        public string? UserName { get => _userName; }
+        public string? PasswordHash { get => _passwordHash; }
+        public string? Email { get => _email; }
+        public string? DOB { get => _dateofbirth; }
+
         // Setters
         public void UpdateUserName(string newUserName)
         {

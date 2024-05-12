@@ -1,6 +1,10 @@
+using System.IO;
 using UserAccount;
 using HashUtility;
 using PasswordUtility;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Collections.Generic;
 
 
 namespace UserUtily
@@ -170,7 +174,29 @@ namespace UserUtily
             Console.ReadLine();
         }
 
+        public static List<User> GenerateFakeUserList()
+        {
+            string jsonData = File.ReadAllText("FakeUserData.json");
+            Console.WriteLine(jsonData);
+            List<User> users = System.Text.Json.JsonSerializer.Deserialize<List<User>>(jsonData);
+
+            return users;
+        }
+
+        public static void DisplayAllUserData(List<User> userAccounts)
+        {
+            foreach (User user in userAccounts)
+            {
+                Console.WriteLine($"Username: {user.GetUserName()}");
+                Console.WriteLine($"PasswordHash: {user.GetUserPasswordHash()}");
+                Console.WriteLine($"Email: {user.GetUserEmail()}");
+                Console.WriteLine($"DateOfBirth: {user.GetUserDateOfBirth()}");
+                Console.WriteLine();
+            }
+        }
 
     }
+
+
 
 }

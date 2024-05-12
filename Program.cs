@@ -19,12 +19,14 @@ namespace Main
             // string userInfo1 = user1.ToString();
             // Console.WriteLine(userInfo);
 
-            User? user = UserUtil.PromptUserForInitialAccountCreation();
+            // User? user = UserUtil.PromptUserForInitialAccountCreation();
+            List<User> users = UserUtil.GenerateFakeUserList();
+            UserUtil.DisplayAllUserData(users);
 
-            if (user == null)
-                Console.WriteLine("Empty User");
-            else
-                Console.WriteLine(user.ToString());
+            // if (user == null)
+            //     Console.WriteLine("Empty User");
+            // else
+            //     Console.WriteLine(user.ToString());
 
 
             Console.WriteLine("Press enter to exit...");
