@@ -61,9 +61,6 @@ namespace UserUtily
 
             return null;
 
-
-
-
         }
 
         /// <summary>
@@ -174,13 +171,48 @@ namespace UserUtily
             Console.ReadLine();
         }
 
-        public static List<User> GenerateFakeUserList()
-        {
-            string jsonData = File.ReadAllText("FakeUserData.json");
-            Console.WriteLine(jsonData);
-            List<User> users = System.Text.Json.JsonSerializer.Deserialize<List<User>>(jsonData);
+        // public static List<User> GenerateFakeUserList()
+        // {
+        //     string jsonData = File.ReadAllText("FakeUserData.json");
+        //     Console.WriteLine(jsonData);
+        //     List<User> users = System.Text.Json.JsonSerializer.Deserialize<List<User>>(jsonData);
 
-            return users;
+        //     return users;
+        // }
+
+
+        /// <summary>
+        /// Prompt user to create a new Item and Password.
+        /// </summary>
+        /// <param name="currentUser">User</param>
+        /// <returns>bool</returns>
+        public static bool PromptUserForNewItemGeneration(User currentUser)
+        {
+            Console.Write("Item name: ");
+            string? itemName = Console.ReadLine();
+            string? hashedPassword = GenerateSinglePasswordHash(currentUser);
+
+            if (itemName == null || hashedPassword == null)
+            {
+                Console.WriteLine("There was an error creating your password:");
+                return false;
+            }
+
+
+            currentUser.UpdateUserPasswordHashes(new(itemName, hashedPassword));
+            return true;
+
+        }
+
+        /// <summary>
+        /// Hashes a single password.
+        /// </summary>
+        /// <param name="currentUser">User</param>
+        /// <returns>string or null</returns>
+        private static string? GenerateSinglePasswordHash(User currentUser)
+        {
+            string? hashedPassword = HashUtil.HashPassword(currentUser);
+            return hashedPassword;
         }
 
         public static void DisplayAllUserData(List<User> userAccounts)
