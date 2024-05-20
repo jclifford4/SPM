@@ -32,30 +32,21 @@ namespace UserUtily
         public static User? PromptUserForInitialAccountCreation()
         {
             User newUser = new User();
-            string? newUsername = HashUtil.GetUserName();
-            string? newUserPasswordHash;
-            string? newUserEmail;
-            string? newUserDateOfBirth;
-
+            string? newUsername = HashUtil.PromptForUsername();
             if (newUsername != null && newUsername != string.Empty)
             {
                 newUser.UpdateUserName(newUsername);
             }
-            Console.Write("Enter your email: ");
-            newUserEmail = Console.ReadLine();
-            Console.Write("Enter your Date of birth(MMDDYYYY): ");
-            newUserDateOfBirth = Console.ReadLine();
-            newUserPasswordHash = HashUtil.HashPassword(newUser);
 
-            if (newUsername != null && newUserEmail != null && newUserDateOfBirth != null
-                && newUserPasswordHash != null && newUsername != string.Empty
-                && newUserEmail != string.Empty && newUserDateOfBirth != string.Empty
-                && newUserPasswordHash != string.Empty)
+            string? newUserPasswordHash = HashUtil.HashNewUserPassword(newUser);
+
+
+            if (newUsername != null && newUserPasswordHash != null
+                && newUsername != string.Empty && newUserPasswordHash != string.Empty)
             {
                 newUser.UpdateUserName(newUsername);
                 newUser.UpdateUserPasswordHash(newUserPasswordHash);
-                newUser.UpdateUserEmail(newUserEmail);
-                newUser.UpdateUserDateOfBirth(newUserDateOfBirth);
+
                 return newUser;
             }
 
@@ -211,7 +202,7 @@ namespace UserUtily
         /// <returns>string or null</returns>
         private static string? GenerateSinglePasswordHash(User currentUser)
         {
-            string? hashedPassword = HashUtil.HashPassword(currentUser);
+            string? hashedPassword = HashUtil.HashNewUserPassword(currentUser);
             return hashedPassword;
         }
 

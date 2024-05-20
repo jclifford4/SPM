@@ -61,10 +61,12 @@ namespace Main
                         Console.WriteLine("cl - To clear the console");
                         Console.WriteLine("cr - Initializes new user account creation");
                         Console.WriteLine("kl - Delete a user account and all associated passwords");
-                        Console.WriteLine("lu - List all users on this machine");
                         Console.WriteLine("li - List all saved named items from a specific user");
+                        Console.WriteLine("lg - Log in as a user");
+                        Console.WriteLine("lu - List all users on this machine");
                         Console.WriteLine("q - quit application");
                         Console.WriteLine("rm - Delete a user password");
+                        Console.WriteLine("ts - test master");
                         Console.WriteLine("----------\n");
                         break;
                     case "cl":
@@ -98,10 +100,12 @@ namespace Main
                             {
                                 User? user = users.FirstOrDefault(u => u.UserName.Equals(usernameInput));
                                 if (user != null)
-                                    foreach (var item in user.UserItemsAndHashes)
-                                    {
-                                        Console.WriteLine($"{item.Item1}");
-                                    }
+                                {
+                                    Console.WriteLine("----------");
+                                    user.ListAllSavedUserItemNames();
+                                    Console.WriteLine("----------");
+
+                                }
                             }
                             catch (Exception ex)
                             {
@@ -110,9 +114,27 @@ namespace Main
 
                         }
                         break;
+                    case "lg":
+                        Console.Write("Username: ");
+                        usernameInput = Console.ReadLine() ?? "";
+                        bool isLoggedIn = false;
+                        try
+                        {
+                            User? user = users.FirstOrDefault(u => u.UserName.Equals(usernameInput));
+                            if (user != null)
+                            {
+                                isLoggedIn = HashUtil.VerifyMasterPassword(user);
+                            }
+                            if (isLoggedIn)
+                                Console.WriteLine("You are logged in");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Error Logging in", ex);
+                        }
+                        break;
 
                     default:
-                        isActive = false;
                         break;
                 }
 
@@ -121,37 +143,6 @@ namespace Main
                 if (menuInput != "q")
                     menuInput = Console.ReadLine();
             }
-
-
-
-
-            // User? user = UserUtil.PromptUserForInitialAccountCreation();
-            // if (user != null)
-            // {
-            //     bool isActive = true;
-            //     while (isActive)
-            //     {
-            //         UserUtil.PromptUserForNewItemGeneration(user);
-            //         Console.WriteLine("Press 'enter' to continue or 'q' to quit...");
-            //         string? input = Console.ReadLine();
-            //         if (input == "q" || input == "quit")
-            //             isActive = false;
-            //     }
-
-            //     user.ListAllSavedUserItemNames();
-            // }
-
-
-
-
-
-            // List<User> users = UserUtil.GenerateFakeUserList();
-            // UserUtil.DisplayAllUserData(users);
-
-            // if (user == null)
-            //     Console.WriteLine("Empty User");
-            // else
-            //     Console.WriteLine(user.ToString());
 
 
             Console.WriteLine("Press enter to exit...");

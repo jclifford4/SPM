@@ -1,9 +1,11 @@
+using HashUtility;
+
 namespace UserAccount
 {
     public class User
     {
         private string _userName { get; set; }
-        private string? _passwordHash { get; set; }
+        private string _passwordHash { get; set; }
         private string? _email { get; set; }
         private string? _dateofbirth { get; set; }
         private List<Tuple<string, string>> _userItemsAndHashes { get; set; }
@@ -13,9 +15,10 @@ namespace UserAccount
         {
             this._userItemsAndHashes = new List<Tuple<string, string>>();
             this._userName = string.Empty;
+            this._passwordHash = string.Empty;
         }
 
-        public User(string UserName, string? PasswordHash, string? Email, string? DOB)
+        public User(string UserName, string PasswordHash, string? Email, string? DOB)
         {
             this._userName = UserName;
             this._passwordHash = PasswordHash;
@@ -26,7 +29,7 @@ namespace UserAccount
         }
 
         public string UserName { get => _userName; }
-        public string? PasswordHash { get => _passwordHash; }
+        public string PasswordHash { get => _passwordHash; }
         public string? Email { get => _email; }
         public string? DOB { get => _dateofbirth; }
         public List<Tuple<string, string>> UserItemsAndHashes { get => _userItemsAndHashes; }
@@ -81,11 +84,13 @@ namespace UserAccount
         /// </summary>
         public void ListAllSavedUserItemNames()
         {
-            this.UserItemsAndHashes.Sort((x, y) => x.Item1.CompareTo(y.Item1));
+            UserItemsAndHashes.Sort((x, y) => x.Item1.CompareTo(y.Item1));
+
             foreach (var item in this.UserItemsAndHashes)
             {
-                Console.WriteLine("${item.Item1} : {item.Item2}");
+                Console.WriteLine($"{item.Item1} : {item.Item2}");
             }
+
         }
         public string? GetUserName()
         {

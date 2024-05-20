@@ -12,14 +12,19 @@ namespace HashUtility
         /// </summary>
         /// <param name="user">User Object</param>
         /// <returns>null or String: Password Hash</returns>
-        public static string? HashPassword(User user)
+        public static string? HashNewUserPassword(User user)
         {
             string? username = user.GetUserName();
-            string? password = GetUserPassword(false);
+            string? password = PromptForUserPassword();
+            Console.WriteLine();
+            string? secondPassword = PromptForUserPassword();
+            Console.WriteLine();
 
 
-            if (username != null && password != null)
+            if (username != null && password != null && secondPassword != null)
             {
+                if (!secondPassword.Equals(password))
+                    return null;
 
                 PasswordHasher<string> hasher = new PasswordHasher<string>();
                 string hashedPassword = hasher.HashPassword(username, password);
@@ -29,7 +34,7 @@ namespace HashUtility
                 bool success = false;
                 while (attempts > 0 && success == false)
                 {
-                    success = VerifyPassword(username, hashedPassword, attempts);
+                    success = VerifyPassword(username, hashedPassword, password);
                     attempts--;
                 }
 
@@ -53,6 +58,36 @@ namespace HashUtility
 
         }
 
+        /// <summary>
+        /// Single use hash helper
+        /// </summary>
+        /// <param name="user">User</param>
+        /// <returns>string: hashedPassword</returns>
+        public static string HashExistingUserPassword(User user)
+        {
+            string? username = user.GetUserName();
+
+            // Hash password
+            PasswordHasher<string> hasher = new PasswordHasher<string>();
+            if (username == null)
+                return "";
+
+            string hashedPassword = hasher.HashPassword(username, ReadPassword());
+            return hashedPassword;
+        }
+
+        /// <summary>
+        /// Master password check
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns>true or false: Result of input and saved user hash</returns>
+        public static bool VerifyMasterPassword(User user)
+        {
+            // Console.Write("Master Password: ");
+            // Compare to user master hash
+
+            return VerifyPassword(user.UserName, user.PasswordHash, ReadPassword());
+        }
 
         /// <summary>
         /// Checks if current password matches previous
@@ -61,14 +96,14 @@ namespace HashUtility
         /// <param name="hashedPassword">string</param>
         /// <param name="attempts">int</param>
         /// <returns>bool: Same password or different</returns>
-        static bool VerifyPassword(string? username, string hashedPassword, int attempts)
+        static bool VerifyPassword(string? username, string hashedPassword, string providedPassword)
         {
-            string? password = GetUserPassword(true);
-            if (username != null && password != null)
+            // string? providedPassword = GetUserPassword(true);
+            if (username != null && providedPassword != null)
             {
                 PasswordHasher<string> hasher = new PasswordHasher<string>();
                 PasswordVerificationResult result = hasher
-                    .VerifyHashedPassword(username, hashedPassword, password);
+                    .VerifyHashedPassword(username, hashedPassword, providedPassword);
 
                 string resultAsString = result.ToString();
 
@@ -79,16 +114,16 @@ namespace HashUtility
 
             return false;
 
-
         }
+
 
         /// <summary>
         /// Prompt user for username.
         /// </summary>
         /// <returns>null or string</returns>
-        public static string? GetUserName()
+        public static string? PromptForUsername()
         {
-            Console.Write("Enter your username: ");
+            Console.Write("Username: ");
             string? username = Console.ReadLine();
             return username ?? null;
         }
@@ -98,23 +133,12 @@ namespace HashUtility
         /// </summary>
         /// <param name="hasFirstPassword">bool: first password entry</param>
         /// <returns>null or string</returns>
-        static string? GetUserPassword(bool hasFirstPassword)
+        static string? PromptForUserPassword()
         {
-
-            if (!hasFirstPassword)
-            {
-                Console.Write("Enter a password: ");
-
-            }
-            else
-            {
-                Console.Write("\nEnter your new password: ");
-
-            }
-
+            Console.Write("Password: ");
             string? password = ReadPassword();
-            return password ?? null;
 
+            return password ?? null;
         }
 
         /// <summary>

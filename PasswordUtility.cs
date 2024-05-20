@@ -10,7 +10,7 @@ namespace PasswordUtility
         private static string GeneratePassword(int length)
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghi" +
-                                "jklmnopqrstuvwxyz0123456789!?_()-+*/";
+                                "jklmnopqrstuvwxyz0123456789!?_()-+*";
             var random = new Random();
             var passwordChars = new char[length];
             for (int i = 0; i < length; i++)
