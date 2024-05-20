@@ -38,7 +38,7 @@ namespace UserUtily
                 newUser.UpdateUserName(newUsername);
             }
 
-            string? newUserPasswordHash = HashUtil.HashNewUserPassword(newUser);
+            string? newUserPasswordHash = HashUtil.PromptAndHashNewUserPassword(newUser);
 
 
             if (newUsername != null && newUserPasswordHash != null
@@ -202,7 +202,7 @@ namespace UserUtily
         /// <returns>string or null</returns>
         private static string? GenerateSinglePasswordHash(User currentUser)
         {
-            string? hashedPassword = HashUtil.HashNewUserPassword(currentUser);
+            string? hashedPassword = HashUtil.PromptAndHashNewUserPassword(currentUser);
             return hashedPassword;
         }
 

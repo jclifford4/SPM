@@ -12,7 +12,7 @@ namespace HashUtility
         /// </summary>
         /// <param name="user">User Object</param>
         /// <returns>null or String: Password Hash</returns>
-        public static string? HashNewUserPassword(User user)
+        public static string? PromptAndHashNewUserPassword(User user)
         {
             string? username = user.GetUserName();
             string? password = PromptForUserPassword();
@@ -40,7 +40,7 @@ namespace HashUtility
 
                 if (success == false)
                 {
-                    Console.WriteLine("Too many attemps try again later!");
+                    Console.WriteLine("Too many attempts try again later!");
 
                 }
                 else

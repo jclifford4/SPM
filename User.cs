@@ -18,6 +18,7 @@ namespace UserAccount
             this._passwordHash = string.Empty;
         }
 
+
         public User(string UserName, string PasswordHash, string? Email, string? DOB)
         {
             this._userName = UserName;
