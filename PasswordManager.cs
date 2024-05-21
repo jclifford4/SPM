@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 
+
 class PasswordManager
 {
     private Dictionary<string, string> passwordStorage = new Dictionary<string, string>();

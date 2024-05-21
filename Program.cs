@@ -152,22 +152,23 @@ namespace Main
             // Console.WriteLine(HashUtil.PromptAndHashNewUserPassword(user1));
 
 
-            PasswordManager passwordManager = new PasswordManager();
-            // Console.WriteLine(EncryptionUtility.GenerateSecureKey());
+            // PasswordManager passwordManager = new PasswordManager();
+            // // Console.WriteLine(EncryptionUtility.GenerateSecureKey());
 
-            // Store a password
-            passwordManager.StorePassword("Netflix", "mySecurePassword123");
-            // Retrieve and decrypt the password
-            // passwordManager.RetrievePassword("Netflix");
+            // // Store a password
+            // passwordManager.StorePassword("Netflix", "mySecurePassword123");
+            // // Retrieve and decrypt the password
+            // // passwordManager.RetrievePassword("Netflix");
+            // passwordManager.StorePassword("Gmail", ";3;l!!!'jl;kj213asdfl;sdf");
 
-            passwordManager.StorePassword("Gmail", "weakpassword");
-            // Retrieve and decrypt the password
-            // passwordManager.RetrievePassword("Gmail");
+            // // Retrieve and decrypt the password
+            // // passwordManager.RetrievePassword("Gmail");
 
-            passwordManager.StorePassword("Facebook", "mySecurePassword800");
+            // passwordManager.StorePassword("Facebook", "mySecurePassword800");
             // Retrieve and decrypt the password
             // passwordManager.RetrievePassword("Facebook");
 
+            DataBaseUtility.DataBaseUtil.TestDBConnection();
 
 
             Console.WriteLine("Press enter to exit...");
