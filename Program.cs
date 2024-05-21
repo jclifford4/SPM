@@ -144,17 +144,30 @@ namespace Main
             //         menuInput = Console.ReadLine();
             // }
 
-
+            // var user = new User();
+            // user.UpdateUserName("joseph");
+            // Console.WriteLine(HashUtil.PromptAndHashNewUserPassword(user));
+            // var user1 = new User();
+            // user.UpdateUserName("bob");
+            // Console.WriteLine(HashUtil.PromptAndHashNewUserPassword(user1));
 
 
             PasswordManager passwordManager = new PasswordManager();
             // Console.WriteLine(EncryptionUtility.GenerateSecureKey());
 
             // Store a password
-            passwordManager.StorePassword("example.com", "mySecurePassword123");
-
+            passwordManager.StorePassword("Netflix", "mySecurePassword123");
             // Retrieve and decrypt the password
-            passwordManager.RetrievePassword("example.com");
+            // passwordManager.RetrievePassword("Netflix");
+
+            passwordManager.StorePassword("Gmail", "weakpassword");
+            // Retrieve and decrypt the password
+            // passwordManager.RetrievePassword("Gmail");
+
+            passwordManager.StorePassword("Facebook", "mySecurePassword800");
+            // Retrieve and decrypt the password
+            // passwordManager.RetrievePassword("Facebook");
+
 
 
             Console.WriteLine("Press enter to exit...");

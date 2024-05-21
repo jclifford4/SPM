@@ -5,7 +5,13 @@ class PasswordManager
 {
     private Dictionary<string, string> passwordStorage = new Dictionary<string, string>();
 
-    public void StorePassword(string key, string password)
+    /// <summary>
+    /// Encrypt password
+    /// </summary>
+    /// <param name="storageKey">string: dictionary key</param>
+    /// <param name="password">string: provided password</param>
+    /// <exception cref="ArgumentNullException"></exception>
+    public void StorePassword(string storageKey, string password)
     {
         if (password == null)
         {
@@ -13,16 +19,19 @@ class PasswordManager
         }
 
         string encryptedPassword = EncryptionUtility.EncryptString(password);
-        passwordStorage[key] = encryptedPassword;
-        Console.WriteLine("Password stored successfully!");
+        passwordStorage[storageKey] = encryptedPassword;
+        Console.WriteLine($"Password stored successfully! {storageKey} : {encryptedPassword}");
     }
-
-    public void RetrievePassword(string key)
+    /// <summary>
+    /// Decrypt the password
+    /// </summary>
+    /// <param name="storageKey">string: the key of dictionary</param>
+    public void RetrievePassword(string storageKey)
     {
-        if (passwordStorage.TryGetValue(key, out var encryptedPassword))
+        if (passwordStorage.TryGetValue(storageKey, out var encryptedPassword))
         {
             string decryptedPassword = EncryptionUtility.DecryptString(encryptedPassword);
-            Console.WriteLine($"Decrypted Password for {key}: {decryptedPassword}");
+            Console.WriteLine($"Decrypted Password for {storageKey}: {decryptedPassword}");
         }
         else
         {
