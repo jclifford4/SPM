@@ -66,7 +66,7 @@ namespace DataBaseUtility
         /// <param name="username">string</param>
         /// <param name="passwordhash">string</param>
         /// <param name="datetime">DateTime</param>
-        public void Update(string username, string passwordhash, DateTime datetime)
+        public void Update(string username, string passwordhash, string datetime)
         {
             _privateDatabaseManager.Update(username, passwordhash, datetime);
         }
@@ -207,9 +207,9 @@ namespace DataBaseUtility
             /// <param name="username">string</param>
             /// <param name="passwordhash">string</param>
             /// <param name="datetime">DateTime</param>
-            public void Update(string username, string passwordhash, DateTime datetime)
+            public void Update(string username, string passwordhash, string datetime)
             {
-                string query = $"UPDATE users SET user='{username}', passwordHash='{passwordhash}', creationDate='{datetime}'";
+                string query = $"UPDATE users SET userName='{username}', passwordHash='{passwordhash}', creationDate='{datetime}'";
 
                 if (this.OpenConnection() == true)
                 {
@@ -222,6 +222,7 @@ namespace DataBaseUtility
                     this.CloseConnection();
                 }
             }
+
 
             /// <summary>
             /// Delete User from database

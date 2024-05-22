@@ -169,52 +169,61 @@ namespace Main
             // passwordManager.RetrievePassword("Facebook");
 
             DatabaseManagerAcessor dbConnect = new DatabaseManagerAcessor();
-            var user = new User();
-#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-            string name = Console.ReadLine();
-#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
-#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-            string hash = HashUtil.PromptAndHashNewUserPassword(user);
-#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
-            if (name != null && hash != null)
+            bool running = true;
+            while (running)
             {
-                // user.UpdateUserName(name);
-                // user.UpdateUserPasswordHash(hash);
-                DateTime now = DateTime.Now;
-                string mysqlDateTime = now.ToString("yyyy-MM-dd HH:mm:ss");
+                var user = new User();
+                Console.Write("username: ");
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+                string name = Console.ReadLine();
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+                string hash = HashUtil.PromptAndHashNewUserPassword(user);
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+                if (name != null && hash != null)
+                {
+                    // user.UpdateUserName(name);
+                    // user.UpdateUserPasswordHash(hash);
+                    string mysqlDateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
-                // Console.WriteLine(now);
-                // Console.WriteLine(mysqlDateTime);
+                    dbConnect.Insert(name, hash, mysqlDateTime);
+                    // dbConnect.OpenDatabaseConnection();
+                    // dbConnect.CloseDatabaseConnection();
+                    // List<string>[] lists = dbConnect.Select();
 
-                dbConnect.Insert(name, hash, mysqlDateTime);
-                // // dbConnect.OpenDatabaseConnection();
-                // // dbConnect.CloseDatabaseConnection();
-                // List<string>[] lists = dbConnect.Select();
-
-                // Console.WriteLine("Before deletion");
-                // for (int i = 0; i < lists.Length - 1; i++)
-                // {
-                //     Console.WriteLine($"{lists[0][i]} {lists[1][i]} {lists[2][i]}");
-
-
-
-                // }
-
-
-                // dbConnect.Delete("bill");
-                // lists = dbConnect.Select();
-                // Console.WriteLine("After deletion");
-                // for (int i = 0; i < lists.Length - 1; i++)
-                // {
-                //     Console.WriteLine($"{lists[0][i]} {lists[1][i]} {lists[2][i]}");
+                    // Console.WriteLine("Before deletion");
+                    // for (int i = 0; i < lists.Length - 1; i++)
+                    // {
+                    //     Console.WriteLine($"{lists[0][i]} {lists[1][i]} {lists[2][i]}");
 
 
 
-                // }
-                // dbConnect.Update(name, hash, dateTime);
+                    // }
 
 
+                    // dbConnect.Delete("bill");
+                    // lists = dbConnect.Select();
+                    // Console.WriteLine("After deletion");
+                    // for (int i = 0; i < lists.Length - 1; i++)
+                    // {
+                    //     Console.WriteLine($"{lists[0][i]} {lists[1][i]} {lists[2][i]}");
+
+
+
+                    // }
+                    // dbConnect.Update(name, hash, dateTime);
+
+
+                }
+                Console.WriteLine("Press 'q' to quit...");
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+                if (Console.ReadLine().Equals("q"))
+                {
+                    break;
+                }
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
             }
+            // dbConnect.Update("joseph", "AQAAAAIAAYagAAAAEBTRKjwaHLYKptHkDwW3E/6xOrsnueLl2XncbqZxEgpGGvX9ITcuwDTC7EzsvT620A==", mysqlDateTime);
             Console.WriteLine("Press enter to exit...");
             Console.ReadLine();
         }
