@@ -45,7 +45,7 @@ namespace HashUtility
                 }
                 else
                 {
-                    Console.WriteLine("You've succesfully created a password!");
+                    // Console.WriteLine("You've succesfully created a password!");
                     return hashedPassword;
                 }
             }
@@ -73,7 +73,31 @@ namespace HashUtility
                 return "";
 
             string hashedPassword = hasher.HashPassword(username, ReadPassword());
+            Console.WriteLine("HashedPassword");
             return hashedPassword;
+        }
+
+        /// <summary>
+        /// Hashes password from user
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="providedPassword"></param>
+        /// <returns></returns>
+        public static bool HashPassword(User user, string providedPassword)
+        {
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+            string username = user.GetUserName();
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+
+            if (username != null && providedPassword != null)
+            {
+                PasswordHasher<string> hasher = new PasswordHasher<string>();
+                string hash = hasher.HashPassword(username, providedPassword);
+                user.UpdateUserPasswordHash(hash);
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -145,11 +169,12 @@ namespace HashUtility
         /// Reads key input from console
         /// </summary>
         /// <returns>Raw password</returns>
-        static string ReadPassword()
+        public static string ReadPassword()
         {
             Console.CursorVisible = false;
             string password = "";
             ConsoleKeyInfo key;
+            Console.Write("password: ");
 
             do
             {

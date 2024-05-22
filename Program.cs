@@ -172,46 +172,36 @@ namespace Main
             bool running = true;
             while (running)
             {
+                string mysqlDateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                 var user = new User();
-                Console.Write("username: ");
-#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-                string name = Console.ReadLine();
-#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
-#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-                string hash = HashUtil.PromptAndHashNewUserPassword(user);
-#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
-                if (name != null && hash != null)
+                // Set user name
+                user.UpdateUserName("steve");
+                // Set password hash
+                HashUtil.HashPassword(user, "poop123");
+                // Insert new user to DB
+                dbConnect.Insert(user.UserName, user.PasswordHash, mysqlDateTime);
+
+                // Create new username
+                string newName = "joseph";
+                // get original hash
+                string hash = user.PasswordHash;
+                if (hash != null && newName != null)
                 {
-                    // user.UpdateUserName(name);
-                    // user.UpdateUserPasswordHash(hash);
-                    string mysqlDateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-
-                    dbConnect.Insert(name, hash, mysqlDateTime);
-                    // dbConnect.OpenDatabaseConnection();
-                    // dbConnect.CloseDatabaseConnection();
-                    // List<string>[] lists = dbConnect.Select();
-
-                    // Console.WriteLine("Before deletion");
-                    // for (int i = 0; i < lists.Length - 1; i++)
+                    // if (HashUtil.VerifyMasterPassword(user) == true)
                     // {
-                    //     Console.WriteLine($"{lists[0][i]} {lists[1][i]} {lists[2][i]}");
+                    string oldName = user.UserName;
+                    Console.WriteLine(user.PasswordHash);
+                    // Update name
+                    user.UpdateUserName(newName);
+
+                    // Make new hash
+                    HashUtil.HashPassword(user, "poop123");
+                    Console.WriteLine(user.PasswordHash);
 
 
-
+                    dbConnect.Update(oldName, user.UserName, user.PasswordHash, mysqlDateTime);
                     // }
 
-
-                    // dbConnect.Delete("bill");
-                    // lists = dbConnect.Select();
-                    // Console.WriteLine("After deletion");
-                    // for (int i = 0; i < lists.Length - 1; i++)
-                    // {
-                    //     Console.WriteLine($"{lists[0][i]} {lists[1][i]} {lists[2][i]}");
-
-
-
-                    // }
-                    // dbConnect.Update(name, hash, dateTime);
 
 
                 }
@@ -219,11 +209,11 @@ namespace Main
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
                 if (Console.ReadLine().Equals("q"))
                 {
+                    running = false;
                     break;
                 }
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
             }
-            // dbConnect.Update("joseph", "AQAAAAIAAYagAAAAEBTRKjwaHLYKptHkDwW3E/6xOrsnueLl2XncbqZxEgpGGvX9ITcuwDTC7EzsvT620A==", mysqlDateTime);
             Console.WriteLine("Press enter to exit...");
             Console.ReadLine();
         }
