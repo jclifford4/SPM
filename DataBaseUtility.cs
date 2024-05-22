@@ -40,6 +40,36 @@ namespace DataBaseUtility
         {
             return _privateDatabaseManager.Select();
         }
+
+        /// <summary>
+        /// Insert user
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="passwordHash"></param>
+        public void Insert(string username, string passwordHash, string datetime)
+        {
+            _privateDatabaseManager.Insert(username, passwordHash, datetime);
+        }
+
+        /// <summary>
+        /// Delete user
+        /// </summary>
+        /// <param name="username"></param>
+        public void Delete(string username)
+        {
+            _privateDatabaseManager.Delete(username);
+        }
+
+        /// <summary>
+        /// Update user
+        /// </summary>
+        /// <param name="username">string</param>
+        /// <param name="passwordhash">string</param>
+        /// <param name="datetime">DateTime</param>
+        public void Update(string username, string passwordhash, DateTime datetime)
+        {
+            _privateDatabaseManager.Update(username, passwordhash, datetime);
+        }
         /// <summary>
         /// Private Database Manager class
         /// </summary>
@@ -150,20 +180,66 @@ namespace DataBaseUtility
                 }
             }
 
-            // //Insert statement
-            // public void Insert()
-            // {
-            // }
+            /// <summary>
+            /// Insert new user into database
+            /// </summary>
+            /// <param name="username">string</param>
+            /// <param name="passwordhash">string</param>
+            public void Insert(string username, string passwordhash, string datetime)
+            {
 
-            // //Update statement
-            // public void Update()
-            // {
-            // }
+                string query = $"INSERT INTO users (userName, passwordHash, creationDate) Values('{username}', '{passwordhash}', '{datetime}')";
 
-            // //Delete statement
-            // public void Delete()
-            // {
-            // }
+                if (this.OpenConnection())
+                {
+                    MySqlCommand cmd = new MySqlCommand(query, connection);
+
+                    cmd.ExecuteReader();
+
+
+                    this.CloseConnection();
+                }
+            }
+
+            /// <summary>
+            /// Update user statement
+            /// </summary>
+            /// <param name="username">string</param>
+            /// <param name="passwordhash">string</param>
+            /// <param name="datetime">DateTime</param>
+            public void Update(string username, string passwordhash, DateTime datetime)
+            {
+                string query = $"UPDATE users SET user='{username}', passwordHash='{passwordhash}', creationDate='{datetime}'";
+
+                if (this.OpenConnection() == true)
+                {
+                    MySqlCommand cmd = new MySqlCommand();
+                    cmd.CommandText = query;
+                    cmd.Connection = connection;
+
+                    cmd.ExecuteReader();
+
+                    this.CloseConnection();
+                }
+            }
+
+            /// <summary>
+            /// Delete User from database
+            /// </summary>
+            /// <param name="username">string</param>
+            public void Delete(string username)
+            {
+                string query = $"DELETE FROM users WHERE userName= '{username}'";
+
+                if (this.OpenConnection() == true)
+                {
+                    MySqlCommand cmd = new MySqlCommand(query, connection);
+                    cmd.ExecuteReader();
+                    this.CloseConnection();
+                }
+
+            }
+
 
             /// <summary>
             /// Request a select statement to database
@@ -178,6 +254,7 @@ namespace DataBaseUtility
                 list[1] = new List<string>();   // usernames
                 list[2] = new List<string>();   // passwordhashes
 
+
                 if (this.OpenConnection() == true)
                 {
                     MySqlCommand cmd = new MySqlCommand(query, connection);
@@ -186,9 +263,9 @@ namespace DataBaseUtility
 
                     while (dataReader.Read())
                     {
-                        list[0].Add(dataReader["UserID"] + "");
-                        list[1].Add(dataReader["UserName"] + "");
-                        list[2].Add(dataReader["MasterHash"] + "");
+                        list[0].Add(dataReader["userID"] + "");
+                        list[1].Add(dataReader["userName"] + "");
+                        list[2].Add(dataReader["passwordHash"] + "");
                     }
 
                     dataReader.Close();
