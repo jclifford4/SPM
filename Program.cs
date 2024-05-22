@@ -2,6 +2,7 @@
 using UserUtily;
 using HashUtility;
 using UserAccount;
+using DataBaseUtility;
 
 namespace Main
 {
@@ -168,12 +169,20 @@ namespace Main
             // Retrieve and decrypt the password
             // passwordManager.RetrievePassword("Facebook");
 
-            DataBaseUtility.DataBaseUtil.TestDBConnection();
+            DatabaseManagerAcessor dbConnect = new DatabaseManagerAcessor();
+            // dbConnect.OpenDatabaseConnection();
+            // dbConnect.CloseDatabaseConnection();
+            List<string>[] lists = dbConnect.Select();
+
+            for (int i = 0; i < lists.Length - 1; i++)
+            {
+                Console.WriteLine($"{lists[0][i]} {lists[1][i]} {lists[2][i]}");
 
 
+
+            }
             Console.WriteLine("Press enter to exit...");
             Console.ReadLine();
-
         }
     }
 }
