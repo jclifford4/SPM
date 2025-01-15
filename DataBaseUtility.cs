@@ -105,7 +105,7 @@ namespace DataBaseUtility
                 server = "localhost";
                 database = "spmdb";
                 uid = "root";
-                password = "FullstackDev12!";
+                password = "*****";
                 string connectionString;
                 connectionString = "SERVER=" + server + ";" + "DATABASE=" +
                 database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
